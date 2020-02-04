@@ -28,8 +28,8 @@ public class Course {
         return code;
     }
 
-    public String getInfo() { // Will be used as a toast
-        return this.title + this.code + " has been created!";
+    public String getInfo() {
+        return this.title + this.code;
     }
 
     // Setters

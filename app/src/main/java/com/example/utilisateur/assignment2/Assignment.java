@@ -30,8 +30,8 @@ public class Assignment {
         return grade;
     }
 
-    public String getInfo() { // Will be used as a toast
-        return this.title  + " has been created!";
+    public String getInfo() {
+        return this.title;
     }
 
     //Setters

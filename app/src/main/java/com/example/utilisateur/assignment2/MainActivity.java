@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     protected FloatingActionButton floatingActionButton;
@@ -30,4 +32,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void loadAllCourses() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        List<Course> course = databaseHelper.getAllCourses();
+
+        String coursesInformation = "";
+        for (int i = 0; i < course.size(); i++)
+            coursesInformation += course.get(i).getInfo() + "\n";
+
+        coursesTextView.setText(coursesInformation);
+    }
+
 }
