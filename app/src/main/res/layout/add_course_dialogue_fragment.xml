@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="400dp"
+    android:minWidth="300dp"
     tools:visibility="visible">
 
     <EditText
