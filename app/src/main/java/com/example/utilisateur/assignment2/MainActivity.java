@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                InsertCourseDialogFragment insertCourseDialogFragment = new InsertCourseDialogFragment();
+                insertCourseDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
         });
 
