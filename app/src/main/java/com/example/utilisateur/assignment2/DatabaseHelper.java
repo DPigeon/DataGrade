@@ -2,10 +2,15 @@ package com.example.utilisateur.assignment2;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 
@@ -38,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public long addCourse(Course course) {
-        SQLiteDatabase database = this.getWritableDatabase(); // We get the reference to the database
+        SQLiteDatabase database = this.getWritableDatabase(); // We get the reference to the database to write
         long id = -1; // Start at -1 to get the first id at 0
 
         // We prepare the values for the dabatase
@@ -56,4 +61,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public List<Course> getAllCourses() {
+        SQLiteDatabase database = this.getReadableDatabase(); // We get the reference to the database to read
+        Cursor cursor = null;
+
+        try {
+            cursor = database.query(COURSE_TABLE, null, null, null, null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+                // Create a new list
+                List<Course> courseList = new ArrayList<>();
+
+                do {
+                    // We get all the parameters
+                    int id = cursor.getInt(cursor.getColumnIndex(COLUMN_COURSE_ID));
+                    String title = cursor.getString(cursor.getColumnIndex(COLUMN_COURSE_TITLE));
+                    String code = cursor.getString(cursor.getColumnIndex(COLUMN_COURSE_CODE));
+
+                    Course currentCourse = new Course(id, title, code);
+                    courseList.add(currentCourse);
+                } while (cursor.moveToNext());
+                return courseList;
+            }
+        } catch (SQLException exception) {
+            Toast.makeText(context,"Error: " + exception.getMessage(), Toast.LENGTH_LONG);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            database.close();
+        }
+        return Collections.emptyList(); // Nothing to display
+    }
 }
