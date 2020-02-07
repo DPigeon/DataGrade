@@ -68,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             cursor = database.query(COURSE_TABLE, null, null, null, null, null, null);
 
-            if (cursor != null) {
+            if (cursor != null && cursor.moveToFirst()) {
                 cursor.moveToFirst();
                 // Create a new list
                 List<Course> courseList = new ArrayList<>();

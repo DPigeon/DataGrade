@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,7 +36,20 @@ public class InsertCourseDialogFragment extends DialogFragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 // Save to the database
+                DatabaseHelper databaseHelper = new DatabaseHelper(getActivity()); // We get a reference of the database
+
+                // We gather all the info to create a new course
+                int id = -1;
+                String courseTitle = courseTitleEditText.getText().toString();
+                String courseCode = courseCodeEditText.getText().toString();
+                Course course = new Course(id, courseTitle, courseCode);
+
+                // We add the course into the database
+                databaseHelper.addCourse(course);
+                Toast toast = Toast.makeText(getActivity(), "Course has been saved!", Toast.LENGTH_LONG);
+                toast.show();
+                ((MainActivity)getActivity()).loadAllCourses(); // We cast the main activity to reload the courses
+                getDialog().dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
