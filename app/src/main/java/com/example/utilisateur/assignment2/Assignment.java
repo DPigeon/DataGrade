@@ -4,9 +4,9 @@ public class Assignment {
     int id;
     int courseId;
     String title;
-    double grade;
+    String grade;
 
-    Assignment(int i, int cId, String name, double percent) {
+    Assignment(int i, int cId, String name, String percent) {
         id = i;
         courseId = cId;
         title = name;
@@ -26,7 +26,7 @@ public class Assignment {
         return title;
     }
 
-    public double getGrade() {
+    public String getGrade() {
         return grade;
     }
 
@@ -47,7 +47,7 @@ public class Assignment {
         title = name;
     }
 
-    public void setGrade(double percent) {
+    public void setGrade(String percent) {
         grade = percent;
     }
 }

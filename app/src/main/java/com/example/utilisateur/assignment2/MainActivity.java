@@ -1,5 +1,6 @@
 package com.example.utilisateur.assignment2;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -28,6 +29,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupUI();
+        instantiateAdapter();
+        loadAllCourses(); // We load all courses on create
+    }
+
+    protected void setupAction() { // No action bar for the main activity
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+    }
+
+    void setupUI() {
+        setupAction();
         coursesString = new ArrayList<String>();
         floatingActionButton = findViewById(R.id.floatingActionButton);
 
@@ -35,11 +48,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 InsertCourseDialogFragment insertCourseDialogFragment = new InsertCourseDialogFragment();
+                Bundle parameters = new Bundle();
+                parameters.putString("fromActivity", "mainActivity");
+                insertCourseDialogFragment.setArguments(parameters);
                 insertCourseDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
         });
-        instantiateAdapter();
-        loadAllCourses(); // We load all courses on create
     }
 
     public void loadAllCourses() {

@@ -1,5 +1,6 @@
 package com.example.utilisateur.assignment2;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,9 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.utilisateur.assignment2.DatabaseConfig.COURSE_TABLE;
+import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_ID;
 
 public class AssignmentActivity extends AppCompatActivity {
     protected TextView titleCourseTextView;
@@ -44,7 +49,7 @@ public class AssignmentActivity extends AppCompatActivity {
                 DatabaseHelper databaseHelper = new DatabaseHelper(AssignmentActivity.this);
                 Bundle bundle = getIntent().getExtras();
                 int id = bundle.getInt("id");
-                databaseHelper.deleteCourse(id);
+                databaseHelper.deleteCourse(COURSE_TABLE, COLUMN_COURSE_ID, id);
                 goToActivity(MainActivity.class);
             }
         });

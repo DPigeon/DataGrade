@@ -16,6 +16,10 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 
+import static com.example.utilisateur.assignment2.DatabaseConfig.ASSIGNMENT_TABLE;
+import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_COURSE_ID;
+import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_GRADE;
+import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_TITLE;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_CODE;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_ID;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_TITLE;
@@ -63,9 +67,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public void deleteCourse(int id) { // We delete by ID
+    public long addAssignment(Assignment assignment) {
+        SQLiteDatabase database = this.getWritableDatabase(); // We get the reference to the database to write
+        long id = -1; // Start at -1 to get the first id at 0
+
+        // We prepare the values for the dabatase
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_ASSIGNMENT_COURSE_ID, assignment.getCourseId());
+        contentValues.put(COLUMN_ASSIGNMENT_TITLE, assignment.getTitle());
+        contentValues.put(COLUMN_ASSIGNMENT_GRADE, assignment.getGrade());
+
+        try {
+            id = database.insertOrThrow(ASSIGNMENT_TABLE, null, contentValues); // We put the content values inside the table
+        } catch (SQLException exception) {
+            Toast.makeText(context,"Error: " + exception.getMessage(), Toast.LENGTH_LONG);
+        } finally {
+            database.close();
+        }
+        return id;
+    }
+
+    public void deleteCourse(String table, String column, int id) { // We delete by ID and will have to delete all assignments too
         SQLiteDatabase database = this.getWritableDatabase();
-        String rowToDeleteQuery = "DELETE FROM " + COURSE_TABLE + " WHERE " + COLUMN_COURSE_ID + "=" + "'" + id + "';";
+        String rowToDeleteQuery = "DELETE FROM " + table + " WHERE " + column + "=" + "'" + id + "';";
 
         try {
             database.execSQL(rowToDeleteQuery);
