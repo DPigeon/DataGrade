@@ -26,6 +26,7 @@ public class AssignmentActivity extends AppCompatActivity {
         assignments = new ArrayList<String>();
 
         setupUI();
+        fetchData();
     }
 
     protected void setupUI() {
@@ -35,6 +36,14 @@ public class AssignmentActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<String>(this, R.layout.activity_assignment, R.id.courseTitleTextView, assignments);
         assignmentListView.setAdapter(adapter);
+    }
+
+    protected void fetchData() {
+        Bundle bundle = getIntent().getExtras();
+        String courseName = bundle.getString("courseName");
+        String courseCode = bundle.getString("courseCode");
+        if (bundle != null)
+            titleCourseTextView.setText(courseName + "                     " + courseCode);
     }
 
 }
