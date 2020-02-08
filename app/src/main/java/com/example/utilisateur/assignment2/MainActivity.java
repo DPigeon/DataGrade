@@ -2,12 +2,13 @@ package com.example.utilisateur.assignment2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -19,14 +20,15 @@ public class MainActivity extends AppCompatActivity {
     protected FloatingActionButton floatingActionButton;
     protected ListView coursesListView;
     protected ArrayAdapter adapter;
-    protected List<String> courses;
+    protected List<String> coursesString; // Used to display the list
+    protected List<Course> courses; // Used to manage the clicks
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        courses = new ArrayList<String>();
+        coursesString = new ArrayList<String>();
         floatingActionButton = findViewById(R.id.floatingActionButton);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -36,27 +38,42 @@ public class MainActivity extends AppCompatActivity {
                 insertCourseDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
         });
-
-        loadAllCourses(); // We load all courses on create
         instantiateAdapter();
+        loadAllCourses(); // We load all courses on create
     }
 
     public void loadAllCourses() {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        List<Course> coursesFromDatabase = databaseHelper.getAllCourses();
-
-        if (coursesFromDatabase != null) {
-            for (int i = 0; i < coursesFromDatabase.size(); i++)
-                courses.add(coursesFromDatabase.get(i).getInfo());
+        courses = databaseHelper.getAllCourses();
+        coursesString.clear(); // Clear it to add new
+        if (courses != null) {
+            for (int i = 0; i < courses.size(); i++)
+                coursesString.add(courses.get(i).getInfo()); // Add new courses
         }
+        adapter.notifyDataSetChanged();
     }
 
     protected void instantiateAdapter() {
         // Setting up the list view with its adapter
-        if (courses != null)
-            adapter = new ArrayAdapter<String>(this, R.layout.activity_main, R.id.coursesTextView, courses);
+        adapter = new ArrayAdapter<String>(this, R.layout.activity_main, R.id.coursesTextView, coursesString);
         coursesListView = findViewById(R.id.coursesListView);
+        coursesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String name = courses.get(position).getTitle();
+                String code = courses.get(position).getCode();
+                goToActivity(AssignmentActivity.class, position, name, code);
+            }
+        });
         coursesListView.setAdapter(adapter);
+    }
+
+    protected void goToActivity(Class page, int id, String courseName, String courseCode) { // Function that goes from the main activity to another one
+        Intent intent = new Intent(MainActivity.this, page); // from the main activity to the profile class
+        intent.putExtra("id", id);
+        intent.putExtra("courseName", courseName);
+        intent.putExtra("courseCode", courseCode);
+        startActivity(intent);
     }
 
 }

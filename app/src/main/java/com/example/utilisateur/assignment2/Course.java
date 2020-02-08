@@ -29,7 +29,7 @@ public class Course {
     }
 
     public String getInfo() {
-        return this.title + this.code;
+        return this.title + "\n" + this.code + "\n\n" + "Assignment Average: NA";
     }
 
     // Setters
