@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class AssignmentActivity extends AppCompatActivity {
     protected ArrayAdapter adapter;
     protected List<String> assignments;
     protected Button deleteButton;
+    protected FloatingActionButton assignmentFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,19 @@ public class AssignmentActivity extends AppCompatActivity {
         titleCourseTextView = findViewById(R.id.courseTitleTextView);
         assignmentListView = findViewById(R.id.assignmentListView);
         deleteButton = findViewById(R.id.deleteButton);
+
+        assignmentFloatingActionButton = findViewById(R.id.assignmentFloatingActionButton);
+        assignmentFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InsertCourseDialogFragment insertAssignmentDialogFragment = new InsertCourseDialogFragment();
+                Bundle parameters = new Bundle();
+                parameters.putString("fromActivity", "assignmentActivity");
+                insertAssignmentDialogFragment.setArguments(parameters);
+                insertAssignmentDialogFragment.show(getSupportFragmentManager(), "Dialog");
+            }
+        });
+        
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

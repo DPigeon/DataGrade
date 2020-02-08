@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class InsertCourseDialogFragment extends DialogFragment {
-    protected EditText courseTitleEditText;
+    protected EditText courseOrAssignmentTitleEditText;
     protected EditText courseCodeOrAssignmentGradeEditText;
     protected Button saveButton;
     protected Button cancelButton;
@@ -29,8 +29,18 @@ public class InsertCourseDialogFragment extends DialogFragment {
     }
 
     protected void setupUiWithView(View view, String parameter) {
-        courseTitleEditText = view.findViewById(R.id.courseTitleEditText);
+        // Setting the right title depending on what activity we are in
+        courseOrAssignmentTitleEditText = view.findViewById(R.id.courseTitleEditText);
+        if (parameter == "mainActivity")
+            courseOrAssignmentTitleEditText.setText("Course Title");
+        else
+            courseOrAssignmentTitleEditText.setText("Assignment Title");
         courseCodeOrAssignmentGradeEditText = view.findViewById(R.id.courseCodeOrAssignmentGradeEditText);
+
+        if (parameter == "mainActivity")
+            courseCodeOrAssignmentGradeEditText.setText("Code");
+        else
+            courseCodeOrAssignmentGradeEditText.setText("Grade");
         saveButton = view.findViewById(R.id.saveButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
@@ -45,7 +55,7 @@ public class InsertCourseDialogFragment extends DialogFragment {
 
                 // We gather all the info to create a new course
                 int id = -1;
-                String title = courseTitleEditText.getText().toString();
+                String title = courseOrAssignmentTitleEditText.getText().toString();
                 String codeOrGrade = courseCodeOrAssignmentGradeEditText.getText().toString(); // course code or assignment grade
                 Course course; // id, title, code
                 Assignment assignment; // id, courseID, title, grade
