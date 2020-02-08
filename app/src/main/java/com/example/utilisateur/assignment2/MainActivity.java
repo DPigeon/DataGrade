@@ -60,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
         coursesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                int courseId = courses.get(position).getId();
                 String name = courses.get(position).getTitle();
                 String code = courses.get(position).getCode();
-                goToActivity(AssignmentActivity.class, position, name, code);
+                goToActivity(AssignmentActivity.class, courseId, name, code);
             }
         });
         coursesListView.setAdapter(adapter);
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("courseName", courseName);
         intent.putExtra("courseCode", courseCode);
         startActivity(intent);
+        finish();
     }
 
 }

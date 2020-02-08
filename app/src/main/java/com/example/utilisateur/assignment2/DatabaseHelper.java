@@ -3,9 +3,11 @@ package com.example.utilisateur.assignment2;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -61,6 +63,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public void deleteCourse(int id) { // We delete by ID
+        SQLiteDatabase database = this.getWritableDatabase();
+        String rowToDeleteQuery = "DELETE FROM " + COURSE_TABLE + " WHERE " + COLUMN_COURSE_ID + "=" + "'" + id + "';";
+
+        try {
+            database.execSQL(rowToDeleteQuery);
+        } catch (SQLException exception) {
+            Toast.makeText(context,"Error: " + exception.getMessage(), Toast.LENGTH_LONG);
+        } finally {
+            database.close();
+        }
+    }
+
     public List<Course> getAllCourses() {
         SQLiteDatabase database = this.getReadableDatabase(); // We get the reference to the database to read
         Cursor cursor = null;
@@ -78,7 +93,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     int id = cursor.getInt(cursor.getColumnIndex(COLUMN_COURSE_ID));
                     String title = cursor.getString(cursor.getColumnIndex(COLUMN_COURSE_TITLE));
                     String code = cursor.getString(cursor.getColumnIndex(COLUMN_COURSE_CODE));
-
                     Course currentCourse = new Course(id, title, code);
                     courseList.add(currentCourse);
                 } while (cursor.moveToNext());
