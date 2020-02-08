@@ -99,9 +99,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteCourse(String table, String column, int id) { // We delete by ID and will have to delete all assignments too
         SQLiteDatabase database = this.getWritableDatabase();
+        String assignmentsToDeleteQuery = "DELETE FROM " + ASSIGNMENT_TABLE + " WHERE " + COLUMN_ASSIGNMENT_COURSE_ID + "=" + "'" + id + "';";
         String rowToDeleteQuery = "DELETE FROM " + table + " WHERE " + column + "=" + "'" + id + "';";
 
         try {
+            database.execSQL(assignmentsToDeleteQuery);
             database.execSQL(rowToDeleteQuery);
         } catch (SQLException exception) {
             Toast.makeText(context,"Error: " + exception.getMessage(), Toast.LENGTH_LONG);

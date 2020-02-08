@@ -1,6 +1,7 @@
 package com.example.utilisateur.assignment2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,8 @@ public class InsertCourseDialogFragment extends DialogFragment {
                     word = "Course";
                 } else {
                     int courseId = getArguments().getInt("courseId"); // Comes from assignmentActivity --> add an assignment
+                    Log.d("id: ", Integer.toString(courseId));
+
                     assignment = new Assignment(id, courseId, title, codeOrGrade);
                     // We add the assignment into the database
                     databaseHelper.addAssignment(assignment);

@@ -38,11 +38,11 @@ public class AssignmentActivity extends AppCompatActivity {
         assignmentsString = new ArrayList<String>();
         Bundle bundle = getIntent().getExtras();
 
-        setupUI();
-        fetchData();
+        setupUI(bundle);
+        fetchData(bundle);
     }
 
-    protected void setupUI() {
+    protected void setupUI(final Bundle bundle) {
         titleCourseTextView = findViewById(R.id.courseTitleTextView);
         assignmentListView = findViewById(R.id.assignmentListView);
         deleteButton = findViewById(R.id.deleteButton);
@@ -53,7 +53,9 @@ public class AssignmentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 InsertCourseDialogFragment insertAssignmentDialogFragment = new InsertCourseDialogFragment();
                 Bundle parameters = new Bundle();
+                int courseId = bundle.getInt("id"); // We pass the course Id from the main activity to the new assignment
                 parameters.putString("fromActivity", "assignmentActivity");
+                parameters.putInt("courseId", courseId);
                 insertAssignmentDialogFragment.setArguments(parameters);
                 insertAssignmentDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
@@ -75,15 +77,14 @@ public class AssignmentActivity extends AppCompatActivity {
         assignmentListView.setAdapter(adapter);
     }
 
-    protected void fetchData() { // We get the previous extras put in the intent
+    protected void fetchData(Bundle bundle) { // We get the previous extras put in the intent
         // Fetching the title of the course
-        Bundle bundle = getIntent().getExtras();
         String courseName = bundle.getString("courseName");
         String courseCode = bundle.getString("courseCode");
         if (bundle != null)
             titleCourseTextView.setText(courseName + "          " + courseCode);
 
-        // Fetching the assignments
+        // Fetching the assignments with the proper course id
         loadAllAssignments();
     }
 
