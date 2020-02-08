@@ -31,7 +31,7 @@ public class Assignment {
     }
 
     public String getInfo() {
-        return this.title;
+        return this.title + "\n" + this.grade;
     }
 
     //Setters

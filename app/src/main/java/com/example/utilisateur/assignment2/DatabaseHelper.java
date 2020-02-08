@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import static com.example.utilisateur.assignment2.DatabaseConfig.ASSIGNMENT_TABLE;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_COURSE_ID;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_GRADE;
+import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_ID;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_TITLE;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_CODE;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_ID;
@@ -36,11 +37,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) { // Called automatically when the database is being created (first time we open the database)
-        String CREATE_TABLE_QUERY = "CREATE TABLE " + COURSE_TABLE + " (" +
+        // Course Table
+        String CREATE_COURSE_TABLE_QUERY = "CREATE TABLE " + COURSE_TABLE + " (" +
                 COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + // ID is primary key and will auto increment
                 COLUMN_COURSE_TITLE + " TEXT NOT NULL, " +
                 COLUMN_COURSE_CODE + " TEXT NOT NULL)";
-        database.execSQL(CREATE_TABLE_QUERY);
+        database.execSQL(CREATE_COURSE_TABLE_QUERY);
+
+        // Assignment Table
+        String CREATE_ASSIGNMENT_TABLE_QUERY = "CREATE TABLE " + ASSIGNMENT_TABLE + " (" +
+                COLUMN_ASSIGNMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + // ID is primary key and will auto increment
+                COLUMN_ASSIGNMENT_COURSE_ID + " INTEGER, " +
+                COLUMN_ASSIGNMENT_TITLE + " TEXT NOT NULL, " +
+                COLUMN_ASSIGNMENT_GRADE + " TEXT NOT NULL)";
+        database.execSQL(CREATE_ASSIGNMENT_TABLE_QUERY);
     }
 
     @Override
@@ -121,6 +131,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     courseList.add(currentCourse);
                 } while (cursor.moveToNext());
                 return courseList;
+            }
+        } catch (SQLException exception) {
+            Toast.makeText(context,"Error: " + exception.getMessage(), Toast.LENGTH_LONG);
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            database.close();
+        }
+        return Collections.emptyList(); // Nothing to display
+    }
+
+    public List<Assignment> getAllAssignments() {
+        SQLiteDatabase database = this.getReadableDatabase(); // We get the reference to the database to read
+        Cursor cursor = null;
+
+        try {
+            cursor = database.query(ASSIGNMENT_TABLE, null, null, null, null, null, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                cursor.moveToFirst();
+                // Create a new list
+                List<Assignment> assignmentList = new ArrayList<>();
+
+                do {
+                    // We get all the parameters
+                    int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ASSIGNMENT_ID));
+                    int courseId = cursor.getInt(cursor.getColumnIndex(COLUMN_ASSIGNMENT_COURSE_ID));
+                    String title = cursor.getString(cursor.getColumnIndex(COLUMN_ASSIGNMENT_TITLE));
+                    String grade = cursor.getString(cursor.getColumnIndex(COLUMN_ASSIGNMENT_GRADE));
+                    Assignment currentAssignment = new Assignment(id, courseId, title, grade);
+                    assignmentList.add(currentAssignment);
+                } while (cursor.moveToNext());
+                return assignmentList;
             }
         } catch (SQLException exception) {
             Toast.makeText(context,"Error: " + exception.getMessage(), Toast.LENGTH_LONG);

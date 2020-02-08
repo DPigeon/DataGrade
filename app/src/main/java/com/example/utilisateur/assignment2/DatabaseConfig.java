@@ -19,5 +19,5 @@ public class DatabaseConfig {
     public static final String COLUMN_ASSIGNMENT_ID = "assignment_id"; // Primary key
     public static final String COLUMN_ASSIGNMENT_COURSE_ID = "assignment_course_id"; // Foreign key
     public static final String COLUMN_ASSIGNMENT_TITLE = "assignment_title";
-    public static final String COLUMN_ASSIGNMENT_GRADE = "assignment_id";
+    public static final String COLUMN_ASSIGNMENT_GRADE = "assignment_grade";
 }

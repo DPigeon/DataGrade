@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         courses = databaseHelper.getAllCourses();
         coursesString.clear(); // Clear it to add new
+
         if (courses != null) {
             for (int i = 0; i < courses.size(); i++)
                 coursesString.add(courses.get(i).getInfo()); // Add new courses

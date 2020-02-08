@@ -25,7 +25,8 @@ public class AssignmentActivity extends AppCompatActivity {
     protected TextView titleCourseTextView;
     protected ListView assignmentListView;
     protected ArrayAdapter adapter;
-    protected List<String> assignments;
+    protected List<String> assignmentsString;
+    protected List<Assignment> assignments;
     protected Button deleteButton;
     protected FloatingActionButton assignmentFloatingActionButton;
 
@@ -34,7 +35,7 @@ public class AssignmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment);
 
-        assignments = new ArrayList<String>();
+        assignmentsString = new ArrayList<String>();
         Bundle bundle = getIntent().getExtras();
 
         setupUI();
@@ -57,7 +58,7 @@ public class AssignmentActivity extends AppCompatActivity {
                 insertAssignmentDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
         });
-        
+
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,16 +71,32 @@ public class AssignmentActivity extends AppCompatActivity {
             }
         });
 
-        adapter = new ArrayAdapter<String>(this, R.layout.activity_assignment, R.id.courseTitleTextView, assignments);
+        adapter = new ArrayAdapter<String>(this, R.layout.activity_assignment, R.id.courseTitleTextView, assignmentsString);
         assignmentListView.setAdapter(adapter);
     }
 
     protected void fetchData() { // We get the previous extras put in the intent
+        // Fetching the title of the course
         Bundle bundle = getIntent().getExtras();
         String courseName = bundle.getString("courseName");
         String courseCode = bundle.getString("courseCode");
         if (bundle != null)
             titleCourseTextView.setText(courseName + "          " + courseCode);
+
+        // Fetching the assignments
+        loadAllAssignments();
+    }
+
+    public void loadAllAssignments() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        assignments = databaseHelper.getAllAssignments();
+        assignmentsString.clear(); // Clear it to add new
+
+        if (assignments != null) {
+            for (int i = 0; i < assignments.size(); i++)
+                assignmentsString.add(assignments.get(i).getInfo()); // Add new courses
+        }
+        adapter.notifyDataSetChanged();
     }
 
     void goToActivity(Class page) { // Function that goes from the main activity to another one

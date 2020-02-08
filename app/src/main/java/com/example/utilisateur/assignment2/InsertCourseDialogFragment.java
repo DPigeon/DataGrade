@@ -41,6 +41,7 @@ public class InsertCourseDialogFragment extends DialogFragment {
             courseCodeOrAssignmentGradeEditText.setText("Code");
         else
             courseCodeOrAssignmentGradeEditText.setText("Grade");
+
         saveButton = view.findViewById(R.id.saveButton);
         cancelButton = view.findViewById(R.id.cancelButton);
 
@@ -75,7 +76,10 @@ public class InsertCourseDialogFragment extends DialogFragment {
                 }
                 Toast toast = Toast.makeText(getActivity(), word + " has been saved!", Toast.LENGTH_LONG);
                 toast.show();
-                ((MainActivity)getActivity()).loadAllCourses(); // We cast the main activity to reload the courses
+                if (parameter.equals("mainActivity"))
+                    ((MainActivity)getActivity()).loadAllCourses(); // We cast the main activity to reload the courses
+                else
+                    ((AssignmentActivity)getActivity()).loadAllAssignments(); // Same thing here for assignments
                 getDialog().dismiss();
             }
         });
