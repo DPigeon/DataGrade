@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setupUI() {
-        setupAction();
         coursesString = new ArrayList<String>();
         floatingActionButton = findViewById(R.id.floatingActionButton);
 
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 insertCourseDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
         });
+        setupAction();
     }
 
     public void loadAllCourses() {

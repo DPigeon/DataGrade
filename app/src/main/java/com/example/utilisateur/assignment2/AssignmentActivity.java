@@ -42,6 +42,19 @@ public class AssignmentActivity extends AppCompatActivity {
         fetchData(bundle);
     }
 
+    /* Used to go back to main activity */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     protected void setupUI(final Bundle bundle) {
         titleCourseTextView = findViewById(R.id.courseTitleTextView);
         assignmentListView = findViewById(R.id.assignmentListView);
@@ -79,18 +92,19 @@ public class AssignmentActivity extends AppCompatActivity {
 
     protected void fetchData(Bundle bundle) { // We get the previous extras put in the intent
         // Fetching the title of the course
+        int courseId = bundle.getInt("id");
         String courseName = bundle.getString("courseName");
         String courseCode = bundle.getString("courseCode");
         if (bundle != null)
             titleCourseTextView.setText(courseName + "          " + courseCode);
 
         // Fetching the assignments with the proper course id
-        loadAllAssignments();
+        loadAllAssignments(courseId);
     }
 
-    public void loadAllAssignments() {
+    public void loadAllAssignments(int id) {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        assignments = databaseHelper.getAllAssignments();
+        assignments = databaseHelper.getAllAssignments(id);
         assignmentsString.clear(); // Clear it to add new
 
         if (assignments != null) {

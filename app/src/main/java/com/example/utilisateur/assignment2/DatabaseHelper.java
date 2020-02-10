@@ -144,12 +144,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Collections.emptyList(); // Nothing to display
     }
 
-    public List<Assignment> getAllAssignments() {
+    public List<Assignment> getAllAssignments(int cId) {
         SQLiteDatabase database = this.getReadableDatabase(); // We get the reference to the database to read
         Cursor cursor = null;
 
         try {
-            cursor = database.query(ASSIGNMENT_TABLE, null, null, null, null, null, null);
+            // We select * assignments, groupBy their ID and having the course ID to show them per courses
+            cursor = database.query(ASSIGNMENT_TABLE, null, null, null, COLUMN_ASSIGNMENT_ID, COLUMN_ASSIGNMENT_COURSE_ID + "=" + "'" + cId + "'", null);
 
             if (cursor != null && cursor.moveToFirst()) {
                 cursor.moveToFirst();

@@ -57,6 +57,7 @@ public class InsertCourseDialogFragment extends DialogFragment {
 
                 // We gather all the info to create a new course
                 int id = -1;
+                int courseId = 0;
                 String title = courseOrAssignmentTitleEditText.getText().toString();
                 String codeOrGrade = courseCodeOrAssignmentGradeEditText.getText().toString(); // course code or assignment grade
                 Course course; // id, title, code
@@ -69,7 +70,7 @@ public class InsertCourseDialogFragment extends DialogFragment {
                     databaseHelper.addCourse(course);
                     word = "Course";
                 } else {
-                    int courseId = getArguments().getInt("courseId"); // Comes from assignmentActivity --> add an assignment
+                    courseId = getArguments().getInt("courseId"); // Comes from assignmentActivity --> add an assignment
                     Log.d("id: ", Integer.toString(courseId));
 
                     assignment = new Assignment(id, courseId, title, codeOrGrade);
@@ -82,7 +83,7 @@ public class InsertCourseDialogFragment extends DialogFragment {
                 if (parameter.equals("mainActivity"))
                     ((MainActivity)getActivity()).loadAllCourses(); // We cast the main activity to reload the courses
                 else
-                    ((AssignmentActivity)getActivity()).loadAllAssignments(); // Same thing here for assignments
+                    ((AssignmentActivity)getActivity()).loadAllAssignments(courseId); // Same thing here for assignments
                 getDialog().dismiss();
             }
         });
