@@ -34,6 +34,10 @@ public class Course {
         String percentSign = "%";
         if (avg == "NA")
             percentSign = "";
+        else {
+            double doubleAvg = Double.parseDouble(avg);
+            avg = String.format("%.2f", doubleAvg);
+        }
         return this.title + "\n" + this.code + "\n\n" + "Assignment Average: " + avg + percentSign;
     }
 

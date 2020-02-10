@@ -182,8 +182,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = null;
         int iteration = 0; // To count the number of assignments
-        int avg = 0;
-        int total = 0;
+        double avg = 0,  total = 0;
 
         try {
             // We select * assignments, groupBy their ID and having the course ID to show them per courses
@@ -193,12 +192,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 do {
                     // We get all the parameters
                     int grade = cursor.getInt(cursor.getColumnIndex(COLUMN_ASSIGNMENT_GRADE));
-                    Log.d("grade:", Integer.toString(grade));
                     total = total + grade;
                     iteration = iteration + 1;
                 } while (cursor.moveToNext());
                 avg = total / iteration;
-                return Integer.toString(avg);
+                return Double.toString(avg);
             }
         } catch (SQLException exception) {
             Toast.makeText(context,"Error: " + exception.getMessage(), Toast.LENGTH_LONG);

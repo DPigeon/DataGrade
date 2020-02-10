@@ -59,10 +59,11 @@ public class MainActivity extends AppCompatActivity {
         setupAction();
     }
 
-    public int getAverageOfAllAssignments() {
+    public double getAverageOfAllAssignments() {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         courses = databaseHelper.getAllCourses();
-        int iteration = 0, total = 0;
+        int iteration = 0;
+        double total = 0;
 
         for (int i = 0; i < courses.size(); i++) {
             int courseId = courses.get(i).getId();
@@ -70,11 +71,11 @@ public class MainActivity extends AppCompatActivity {
             if (average == "NA")
                 total = total + 0;
             else {
-                total = total + Integer.parseInt(average);
+                total = total + Double.parseDouble(average);
                 iteration = iteration + 1;
             }
         }
-        int avg = total / iteration;
+        double avg = total / iteration;
         return  avg;
     }
 
@@ -107,7 +108,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         coursesListView.setAdapter(adapter);
-        coursesTextView.setText("Average of All Assignments: " + Integer.toString(getAverageOfAllAssignments()) + "%"); // The top title with the average
+
+        String avg = "";
+        if (Double.toString(getAverageOfAllAssignments()) == "NaN")
+            avg = "NA";
+        else
+            avg = String.format("%.2f", getAverageOfAllAssignments()) + "%";
+        coursesTextView.setText("Average of All Assignments: " + avg); // The top title with the average
     }
 
     protected void goToActivity(Class page, int id, String courseName, String courseCode) { // Function that goes from the main activity to another one
