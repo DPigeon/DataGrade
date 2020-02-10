@@ -62,8 +62,11 @@ public class MainActivity extends AppCompatActivity {
         coursesString.clear(); // Clear it to add new
 
         if (courses != null) {
-            for (int i = 0; i < courses.size(); i++)
-                coursesString.add(courses.get(i).getInfo()); // Add new courses
+            for (int i = 0; i < courses.size(); i++) {
+                int courseId = courses.get(i).getId();
+                String average = databaseHelper.getAssignmentsAverage(courseId);
+                coursesString.add(courses.get(i).getInfo(average)); // Add new courses
+            }
         }
         adapter.notifyDataSetChanged();
     }

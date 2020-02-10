@@ -4,6 +4,8 @@ package com.example.utilisateur.assignment2;
 * Model in the MVC architecture
 */
 
+import android.util.Log;
+
 public class Course {
     int id; // Primary key
     String title;
@@ -28,8 +30,8 @@ public class Course {
         return code;
     }
 
-    public String getInfo() {
-        return this.title + "\n" + this.code + "\n\n" + "Assignment Average: NA";
+    public String getInfo(String avg) {
+        return this.title + "\n" + this.code + "\n\n" + "Assignment Average: " + avg + "%";
     }
 
     // Setters
