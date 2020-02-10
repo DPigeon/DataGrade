@@ -31,7 +31,10 @@ public class Course {
     }
 
     public String getInfo(String avg) {
-        return this.title + "\n" + this.code + "\n\n" + "Assignment Average: " + avg + "%";
+        String percentSign = "%";
+        if (avg == "NA")
+            percentSign = "";
+        return this.title + "\n" + this.code + "\n\n" + "Assignment Average: " + avg + percentSign;
     }
 
     // Setters
