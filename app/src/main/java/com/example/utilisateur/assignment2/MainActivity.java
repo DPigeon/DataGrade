@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +15,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_COURSE_ID;
+import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_ID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertCourseDialogFragment insertCourseDialogFragment = new InsertCourseDialogFragment();
+                InsertDialogFragment insertDialogFragment = new InsertDialogFragment();
                 Bundle parameters = new Bundle();
                 parameters.putString("fromActivity", "mainActivity");
-                insertCourseDialogFragment.setArguments(parameters);
-                insertCourseDialogFragment.show(getSupportFragmentManager(), "Dialog");
+                insertDialogFragment.setArguments(parameters);
+                insertDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
         });
         setupAction();
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < courses.size(); i++) {
             int courseId = courses.get(i).getId();
-            String average = databaseHelper.getAssignmentsAverage(courseId);
+            String average = databaseHelper.getAssignmentsAverage(courseId, null, null);
             if (average == "NA")
                 total = total + 0;
             else {
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         if (courses != null) {
             for (int i = 0; i < courses.size(); i++) {
                 int courseId = courses.get(i).getId();
-                String average = databaseHelper.getAssignmentsAverage(courseId); // We get the average for each course
+                String average = databaseHelper.getAssignmentsAverage(courseId, COLUMN_ASSIGNMENT_ID, COLUMN_ASSIGNMENT_COURSE_ID + "=" + "'" + courseId + "'"); // We get the average for each course
                 coursesString.add(courses.get(i).getInfo(average)); // Add new courses
             }
         }
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void instantiateAdapter() {
         // Setting up the list view with its adapter
-        adapter = new ArrayAdapter<String>(this, R.layout.activity_main, R.id.coursesTextView, coursesString);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, coursesString);
         coursesListView = findViewById(R.id.coursesListView);
         coursesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

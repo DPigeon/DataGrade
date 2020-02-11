@@ -178,7 +178,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Collections.emptyList(); // Nothing to display
     }
 
-    public String getAssignmentsAverage(int cId) { // Get the average of the course's assignments
+    public String getAssignmentsAverage(int cId, String groupBy, String having) { // Get the average of the course's assignments
+        // We can fetch all assignments of all courses or fetch the assignment of one course by varying the parameters of the function
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = null;
         int iteration = 0; // To count the number of assignments
@@ -186,7 +187,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         try {
             // We select * assignments, groupBy their ID and having the course ID to show them per courses
-            cursor = database.query(ASSIGNMENT_TABLE, null, null, null, COLUMN_ASSIGNMENT_ID, COLUMN_ASSIGNMENT_COURSE_ID + "=" + "'" + cId + "'", null);
+            cursor = database.query(ASSIGNMENT_TABLE, null, null, null, groupBy, having, null);
             if (cursor != null && cursor.moveToFirst()) {
                 cursor.moveToFirst();
                 do {

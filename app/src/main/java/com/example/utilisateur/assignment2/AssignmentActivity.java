@@ -1,11 +1,9 @@
 package com.example.utilisateur.assignment2;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -64,7 +62,7 @@ public class AssignmentActivity extends AppCompatActivity {
         assignmentFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertCourseDialogFragment insertAssignmentDialogFragment = new InsertCourseDialogFragment();
+                InsertDialogFragment insertAssignmentDialogFragment = new InsertDialogFragment();
                 Bundle parameters = new Bundle();
                 int courseId = bundle.getInt("id"); // We pass the course Id from the main activity to the new assignment
                 parameters.putString("fromActivity", "assignmentActivity");
@@ -83,10 +81,12 @@ public class AssignmentActivity extends AppCompatActivity {
                 int id = bundle.getInt("id");
                 databaseHelper.deleteCourse(COURSE_TABLE, COLUMN_COURSE_ID, id);
                 goToActivity(MainActivity.class);
+                Toast toast = Toast.makeText(getApplicationContext(), "Course has been deleted!", Toast.LENGTH_LONG); // Current pointer to the add, the string and the length if stays on
+                toast.show(); // We display it
             }
         });
 
-        adapter = new ArrayAdapter<String>(this, R.layout.activity_assignment, R.id.courseTitleTextView, assignmentsString);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, assignmentsString);
         assignmentListView.setAdapter(adapter);
     }
 
