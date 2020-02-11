@@ -97,14 +97,14 @@ public class InsertDialogFragment extends DialogFragment {
                         databaseHelper.addAssignment(assignment);
                         word = "Assignment";
                     }
+                    Toast toast = Toast.makeText(getActivity(), word + " has been saved!", Toast.LENGTH_LONG);
+                    toast.show();
+                    if (parameter.equals("mainActivity"))
+                        ((MainActivity)getActivity()).loadAllCourses(); // We cast the main activity to reload the courses
+                    else
+                        ((AssignmentActivity)getActivity()).loadAllAssignments(courseId); // Same thing here for assignments
+                    getDialog().dismiss();
                 }
-                Toast toast = Toast.makeText(getActivity(), word + " has been saved!", Toast.LENGTH_LONG);
-                toast.show();
-                if (parameter.equals("mainActivity"))
-                    ((MainActivity)getActivity()).loadAllCourses(); // We cast the main activity to reload the courses
-                else
-                    ((AssignmentActivity)getActivity()).loadAllAssignments(courseId); // Same thing here for assignments
-                getDialog().dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +121,10 @@ public class InsertDialogFragment extends DialogFragment {
         if (title.matches("") || codeOrGrade.matches("")) {
             toastMessage("Fields cannot be empty!");
             return false;
-        }
+        }/* else if () {
+            toastMessage("Grade must be in between 0% and 100%!");
+            return false;
+        }*/
 
         return true;
     }
