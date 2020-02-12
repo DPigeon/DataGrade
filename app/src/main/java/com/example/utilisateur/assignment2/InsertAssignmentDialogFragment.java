@@ -48,7 +48,6 @@ public class InsertAssignmentDialogFragment extends DialogFragment {
         InputFilter[] FilterArrayGrade = new InputFilter[1];
         FilterArrayGrade[0] = new InputFilter.LengthFilter(maxLengthGrade);
         assignmentGradeEditText.setFilters(FilterArrayGrade);
-        assignmentGradeEditText.setInputType(InputType.TYPE_CLASS_NUMBER); // Set input type to numbers
 
         saveButton = view.findViewById(R.id.saveAssignmentButton);
         cancelButton = view.findViewById(R.id.cancelAssignmentButton);
@@ -94,13 +93,15 @@ public class InsertAssignmentDialogFragment extends DialogFragment {
     protected boolean validate(String title, String grade) {
         // Check if all are empty
         // Check the grade (must be between 0 and 100)
+        double gradeDouble = Double.parseDouble(grade);
+
         if (title.matches("") || grade.matches("")) {
             toastMessage("Fields cannot be empty!");
             return false;
-        }/* else if () {
+        }else if (gradeDouble < minGrade || gradeDouble > maxGrade) {
             toastMessage("Grade must be in between 0% and 100%!");
             return false;
-        }*/
+        }
 
         return true;
     }
