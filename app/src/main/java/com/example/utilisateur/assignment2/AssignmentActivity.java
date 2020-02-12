@@ -62,7 +62,7 @@ public class AssignmentActivity extends AppCompatActivity {
         assignmentFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertDialogFragment insertAssignmentDialogFragment = new InsertDialogFragment();
+                InsertCourseDialogFragment insertAssignmentDialogFragment = new InsertCourseDialogFragment();
                 Bundle parameters = new Bundle();
                 int courseId = bundle.getInt("id"); // We pass the course Id from the main activity to the new assignment
                 parameters.putString("fromActivity", "assignmentActivity");

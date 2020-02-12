@@ -3,7 +3,6 @@ package com.example.utilisateur.assignment2;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 /*
-* Used for both insert a course and insert an assignment
+* Used for the course dialog fragment when adding a new course
 */
 
-public class InsertDialogFragment extends DialogFragment {
+public class InsertCourseDialogFragment extends DialogFragment {
     protected EditText courseOrAssignmentTitleEditText;
     protected EditText courseCodeOrAssignmentGradeEditText;
     protected Button saveButton;
@@ -29,7 +28,7 @@ public class InsertDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.add_dialogue_fragment, container, false); // Inflate the layout to use it
+        View view = inflater.inflate(R.layout.add_course_dialog_fragment, container, false); // Inflate the layout to use it
 
         String fromActivity = getArguments().getString("fromActivity");
         setupUiWithView(view, fromActivity);
@@ -49,7 +48,7 @@ public class InsertDialogFragment extends DialogFragment {
         else
             courseOrAssignmentTitleEditText.setText("Assignment Title");
 
-        courseCodeOrAssignmentGradeEditText = view.findViewById(R.id.courseCodeOrAssignmentGradeEditText);
+        courseCodeOrAssignmentGradeEditText = view.findViewById(R.id.courseCodeEditText);
 
         if (parameter == "mainActivity") {
             courseCodeOrAssignmentGradeEditText.setText("Code");
