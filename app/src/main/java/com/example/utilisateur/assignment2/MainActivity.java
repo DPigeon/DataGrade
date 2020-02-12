@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
     protected void goToActivity(Class page, int id, String courseName, String courseCode) { // Function that goes from the main activity to another one
         Intent intent = new Intent(MainActivity.this, page); // from the main activity to the profile class
-        intent.putExtra("id", id);
-        intent.putExtra("courseName", courseName);
-        intent.putExtra("courseCode", courseCode);
+        intent.putExtra(getString(R.string.id), id);
+        intent.putExtra(getString(R.string.courseName), courseName);
+        intent.putExtra(getString(R.string.courseCode), courseCode);
         startActivity(intent);
         finish();
     }

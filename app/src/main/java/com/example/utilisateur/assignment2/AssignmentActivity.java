@@ -64,7 +64,7 @@ public class AssignmentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 InsertAssignmentDialogFragment insertAssignmentDialogFragment = new InsertAssignmentDialogFragment();
                 Bundle parameters = new Bundle();
-                int courseId = bundle.getInt("id"); // We pass the course Id from the main activity to the new assignment
+                int courseId = bundle.getInt(getString(R.string.id)); // We pass the course Id from the main activity to the new assignment
                 parameters.putInt("courseId", courseId); // We pass it
                 insertAssignmentDialogFragment.setArguments(parameters);
                 insertAssignmentDialogFragment.show(getSupportFragmentManager(), "Dialog");
@@ -77,7 +77,7 @@ public class AssignmentActivity extends AppCompatActivity {
                 // Delete from the database with id
                 DatabaseHelper databaseHelper = new DatabaseHelper(AssignmentActivity.this);
                 Bundle bundle = getIntent().getExtras();
-                int id = bundle.getInt("id"); // We get the course id to delete the entire course coming from main activity
+                int id = bundle.getInt(getString(R.string.id)); // We get the course id to delete the entire course coming from main activity
                 databaseHelper.deleteCourse(COURSE_TABLE, COLUMN_COURSE_ID, id);
                 goToActivity(MainActivity.class); // We return to the main activity
 
@@ -92,9 +92,9 @@ public class AssignmentActivity extends AppCompatActivity {
 
     protected void fetchData(Bundle bundle) { // We get the previous extras put in the intent
         // Fetching the title of the course from mainActivity
-        int courseId = bundle.getInt("id");
-        String courseName = bundle.getString("courseName");
-        String courseCode = bundle.getString("courseCode");
+        int courseId = bundle.getInt(getString(R.string.id));
+        String courseName = bundle.getString(getString(R.string.courseName));
+        String courseCode = bundle.getString(getString(R.string.courseCode));
         if (bundle != null)
             titleCourseTextView.setText(courseName + "          " + courseCode);
 

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Assignment2</string>
+    <string name="id">id</string>
+    <string name="courseName">courseName</string>
+    <string name="courseCode">courseCode</string>
 </resources>
