@@ -19,6 +19,10 @@ import java.util.List;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COURSE_TABLE;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_ID;
 
+/*
+* The assignment activity to add assignments and display them with their proper course
+*/
+
 public class AssignmentActivity extends AppCompatActivity {
     protected TextView titleCourseTextView;
     protected ListView assignmentListView;

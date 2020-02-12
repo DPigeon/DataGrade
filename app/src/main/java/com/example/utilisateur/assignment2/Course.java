@@ -1,10 +1,8 @@
 package com.example.utilisateur.assignment2;
 
 /*
-* Model in the MVC architecture
+* Model in the MVC architecture as a Course
 */
-
-import android.util.Log;
 
 public class Course {
     int id; // Primary key
@@ -30,7 +28,7 @@ public class Course {
         return code;
     }
 
-    public String getInfo(String avg) {
+    public String getInfo(String avg) { // Used to get the average too
         String percentSign = "%";
         if (avg == "NA")
             percentSign = "";

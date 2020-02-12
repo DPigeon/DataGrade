@@ -19,6 +19,10 @@ import java.util.List;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_COURSE_ID;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_ASSIGNMENT_ID;
 
+/*
+* The main activity to add courses, view them when clicking on them in the list view
+*/
+
 public class MainActivity extends AppCompatActivity {
 
     protected FloatingActionButton floatingActionButton;

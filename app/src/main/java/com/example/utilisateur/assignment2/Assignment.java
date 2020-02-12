@@ -1,5 +1,9 @@
 package com.example.utilisateur.assignment2;
 
+/*
+ * Model in the MVC architecture as an Assignment
+ */
+
 public class Assignment {
     int id;
     int courseId;

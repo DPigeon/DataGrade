@@ -3,11 +3,9 @@ package com.example.utilisateur.assignment2;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,6 +24,10 @@ import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_I
 import static com.example.utilisateur.assignment2.DatabaseConfig.COLUMN_COURSE_TITLE;
 import static com.example.utilisateur.assignment2.DatabaseConfig.COURSE_TABLE;
 import static com.example.utilisateur.assignment2.DatabaseConfig.DATABASE_NAME;
+
+/*
+* The database controller which handles all the database fetching and getting of data
+*/
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
