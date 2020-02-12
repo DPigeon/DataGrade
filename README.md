@@ -8,5 +8,5 @@ An android mobile application to save data and read data with SQLite.
 - An average of individual courses are shown
 - Everything is stored with SQLite.
 
-![Android-Emulator-LG-G4-5554-2020](https://user-images.githubusercontent.com/37888675/74206363-14973980-4c49-11ea-978a-aaeaf2c85b6f.gif)
+![Android-Emulator-LG-G4-5554-2020 (1)](https://user-images.githubusercontent.com/37888675/74376174-ac169c80-4daf-11ea-8ec0-13f4e2a35d4e.gif)
 
