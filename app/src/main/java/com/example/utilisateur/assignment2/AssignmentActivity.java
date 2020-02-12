@@ -65,8 +65,7 @@ public class AssignmentActivity extends AppCompatActivity {
                 InsertAssignmentDialogFragment insertAssignmentDialogFragment = new InsertAssignmentDialogFragment();
                 Bundle parameters = new Bundle();
                 int courseId = bundle.getInt("id"); // We pass the course Id from the main activity to the new assignment
-                parameters.putString("fromActivity", "assignmentActivity");
-                parameters.putInt("courseId", courseId);
+                parameters.putInt("courseId", courseId); // We pass it
                 insertAssignmentDialogFragment.setArguments(parameters);
                 insertAssignmentDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
@@ -78,9 +77,10 @@ public class AssignmentActivity extends AppCompatActivity {
                 // Delete from the database with id
                 DatabaseHelper databaseHelper = new DatabaseHelper(AssignmentActivity.this);
                 Bundle bundle = getIntent().getExtras();
-                int id = bundle.getInt("id");
+                int id = bundle.getInt("id"); // We get the course id to delete the entire course coming from main activity
                 databaseHelper.deleteCourse(COURSE_TABLE, COLUMN_COURSE_ID, id);
-                goToActivity(MainActivity.class);
+                goToActivity(MainActivity.class); // We return to the main activity
+
                 Toast toast = Toast.makeText(getApplicationContext(), "Course has been deleted!", Toast.LENGTH_LONG); // Current pointer to the add, the string and the length if stays on
                 toast.show(); // We display it
             }
@@ -91,7 +91,7 @@ public class AssignmentActivity extends AppCompatActivity {
     }
 
     protected void fetchData(Bundle bundle) { // We get the previous extras put in the intent
-        // Fetching the title of the course
+        // Fetching the title of the course from mainActivity
         int courseId = bundle.getInt("id");
         String courseName = bundle.getString("courseName");
         String courseCode = bundle.getString("courseCode");

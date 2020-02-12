@@ -52,9 +52,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 InsertCourseDialogFragment insertCourseDialogFragment = new InsertCourseDialogFragment();
-                Bundle parameters = new Bundle();
-                parameters.putString("fromActivity", "mainActivity");
-                insertCourseDialogFragment.setArguments(parameters);
                 insertCourseDialogFragment.show(getSupportFragmentManager(), "Dialog");
             }
         });
@@ -102,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         coursesListView = findViewById(R.id.coursesListView);
         coursesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) { // As soon as we click an item in the course view list
                 int courseId = courses.get(position).getId();
                 String name = courses.get(position).getTitle();
                 String code = courses.get(position).getCode();

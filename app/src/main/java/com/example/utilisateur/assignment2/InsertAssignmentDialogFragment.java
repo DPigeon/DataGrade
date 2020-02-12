@@ -93,12 +93,17 @@ public class InsertAssignmentDialogFragment extends DialogFragment {
     protected boolean validate(String title, String grade) {
         // Check if all are empty
         // Check the grade (must be between 0 and 100)
-        double gradeDouble = Double.parseDouble(grade);
+        double gradeDouble = 0;
+        try {
+            gradeDouble = Double.parseDouble(grade);
+        } catch (Exception exception) {
+            Toast.makeText(getContext(), "Error: " + exception, Toast.LENGTH_LONG);
+        }
 
         if (title.matches("") || grade.matches("")) {
             toastMessage("Fields cannot be empty!");
             return false;
-        }else if (gradeDouble < minGrade || gradeDouble > maxGrade) {
+        } else if (gradeDouble < minGrade || gradeDouble > maxGrade) {
             toastMessage("Grade must be in between 0% and 100%!");
             return false;
         }

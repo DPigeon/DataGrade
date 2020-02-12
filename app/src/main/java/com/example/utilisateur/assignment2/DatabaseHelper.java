@@ -58,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Where we alter our database
     }
 
-    public long addCourse(Course course) {
+    public long addCourse(Course course) { // Used to add a course
         SQLiteDatabase database = this.getWritableDatabase(); // We get the reference to the database to write
         long id = -1; // Start at -1 to get the first id at 0
 
@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public long addAssignment(Assignment assignment) {
+    public long addAssignment(Assignment assignment) { // Used to add an assignment
         SQLiteDatabase database = this.getWritableDatabase(); // We get the reference to the database to write
         long id = -1; // Start at -1 to get the first id at 0
 
@@ -97,12 +97,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public void deleteCourse(String table, String column, int id) { // We delete by ID and will have to delete all assignments too
+    public void deleteCourse(String table, String column, int id) { // We delete by ID and after delete all courses in that course
         SQLiteDatabase database = this.getWritableDatabase();
         String assignmentsToDeleteQuery = "DELETE FROM " + ASSIGNMENT_TABLE + " WHERE " + COLUMN_ASSIGNMENT_COURSE_ID + "=" + "'" + id + "';";
         String rowToDeleteQuery = "DELETE FROM " + table + " WHERE " + column + "=" + "'" + id + "';";
 
         try {
+            // Running two queries
             database.execSQL(assignmentsToDeleteQuery);
             database.execSQL(rowToDeleteQuery);
         } catch (SQLException exception) {
@@ -125,12 +126,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 List<Course> courseList = new ArrayList<>();
 
                 do {
-                    // We get all the parameters
+                    // We get all the parameters with the cursor
                     int id = cursor.getInt(cursor.getColumnIndex(COLUMN_COURSE_ID));
                     String title = cursor.getString(cursor.getColumnIndex(COLUMN_COURSE_TITLE));
                     String code = cursor.getString(cursor.getColumnIndex(COLUMN_COURSE_CODE));
-                    Course currentCourse = new Course(id, title, code);
-                    courseList.add(currentCourse);
+                    Course currentCourse = new Course(id, title, code); // Create the course
+                    courseList.add(currentCourse); // Add it
                 } while (cursor.moveToNext());
                 return courseList;
             }
@@ -206,6 +207,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.close();
             database.close();
         }
-        return "NA";
+        return "NA"; // If nothing, not applicable
     }
 }
