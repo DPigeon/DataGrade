@@ -23,7 +23,7 @@ public class InsertAssignmentDialogFragment extends DialogFragment {
     protected EditText assignmentGradeEditText;
     protected Button saveButton;
     protected Button cancelButton;
-    int maxLengthTitle = 20, maxLengthCode = 10, maxLengthGrade = 3, minGrade = 0, maxGrade = 100; // For validation
+    int maxLengthTitle = 20, maxLengthGrade = 3, minGrade = 0, maxGrade = 100; // For validation
 
     @Nullable
     @Override
@@ -50,8 +50,8 @@ public class InsertAssignmentDialogFragment extends DialogFragment {
         assignmentGradeEditText.setFilters(FilterArrayGrade);
         assignmentGradeEditText.setInputType(InputType.TYPE_CLASS_NUMBER); // Set input type to numbers
 
-        saveButton = view.findViewById(R.id.saveButton);
-        cancelButton = view.findViewById(R.id.cancelButton);
+        saveButton = view.findViewById(R.id.saveAssignmentButton);
+        cancelButton = view.findViewById(R.id.cancelAssignmentButton);
 
         actionButtons();
     }
